@@ -4,6 +4,8 @@ from net.main import execute, training
 class basicWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
+
+        #Define grid layout
         grid_layout = QtWidgets.QGridLayout()
         self.setLayout(grid_layout)
 
@@ -41,11 +43,15 @@ class basicWindow(QtWidgets.QWidget):
 
         self.predictedValue = QtWidgets.QLabel()
 
+        self.developerCheckBox = QtWidgets.QCheckBox("Developer Mode")
+        self.developerCheckBox.stateChanged.connect(self.changeMode)
+
         #Row 4 widgets
         self.submitButton = QtWidgets.QPushButton('Submit', self)
         self.submitButton.clicked.connect(self.submitData)
         self.submitButton.setEnabled(False)
 
+        #Add widgets on grid layout
         grid_layout.addWidget(self.modelLabel, 0, 0)
         grid_layout.addWidget(self.modelCombo, 0, 1)
         grid_layout.addWidget(self.pretrainedCheckBox, 0, 2)
@@ -58,13 +64,18 @@ class basicWindow(QtWidgets.QWidget):
         grid_layout.addWidget(self.imageLabel, 1, 3, 2, 6)
         grid_layout.addWidget(self.predictedLabel, 3, 0)
         grid_layout.addWidget(self.predictedValue, 3, 3)
+        grid_layout.addWidget(self.developerCheckBox, 3, 8)
         grid_layout.addWidget(self.submitButton, 4, 0, 1, 9)
 
         grid_layout.setRowStretch(1, 2)
 
+        #Set Window config
         self.setFixedSize(1300, 800)
         self.setWindowTitle('ML - Button Demo')
         self.setWindowIcon(QtGui.QIcon('./img/logo.png'))
+
+        #Uncheck developer mode
+        self.changeMode(False)
         
     
     def trainModel(self):
@@ -87,6 +98,18 @@ class basicWindow(QtWidgets.QWidget):
     def submitData(self):
         predictedClass = execute(self.fileName)
         self.predictedValue.setText(str(predictedClass))
+        
+    def changeMode(self, state):
+        if (QtCore.Qt.Checked == state):
+            self.pretrainedCheckBox.show()
+            self.epochsLabel.show()
+            self.epochsInput.show()
+            self.trainingButton.show()
+        else:
+            self.pretrainedCheckBox.hide()
+            self.epochsLabel.hide()
+            self.epochsInput.hide()
+            self.trainingButton.hide()
 
 
 if __name__ == '__main__':
