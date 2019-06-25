@@ -47,7 +47,7 @@ def execute(modelName, fileName):
     else:
         model = vgg16()
         model.classifier[6] = nn.Linear(4096, 4)
-    model.load_state_dict(torch.load(modelName + 'checkpoint.pth')['state_dict'])
+    model.load_state_dict('checkpoint\\' + torch.load(modelName + 'checkpoint.pth')['state_dict'])
 
     # Predico la classe dell'input 
     device = "cuda" if torch.cuda.is_available() else "cpu"
