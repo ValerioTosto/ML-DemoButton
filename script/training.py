@@ -34,9 +34,9 @@ from torch.utils.data import DataLoader
 train_set = CSVImageDataset('..\\','..\\csv\\train.csv', transform = train_transform)
 valid_set = CSVImageDataset('..\\','..\\csv\\val.csv', transform = test_transform)
 test_set = CSVImageDataset('..\\','..\\csv\\test.csv', transform = test_transform)
-train_loader = DataLoader(train_set, batch_size=32, num_workers=0, shuffle=True)
-valid_loader = DataLoader(valid_set, batch_size=32, num_workers=0)
-test_loader = DataLoader(test_set, batch_size=32, num_workers=0)
+train_loader = DataLoader(train_set, batch_size=32, num_workers=4, shuffle=True)
+valid_loader = DataLoader(valid_set, batch_size=32, num_workers=4)
+test_loader = DataLoader(test_set, batch_size=32, num_workers=4)
 
 # Training
 
