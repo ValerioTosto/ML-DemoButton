@@ -1,11 +1,15 @@
 import torch
+import os  
 from torch import nn
 from torch.optim import SGD
 from torchnet.meter import AverageValueMeter
 from torchnet.logger import VisdomPlotLogger, VisdomSaver
 from sklearn.metrics import accuracy_score
 
-def trainval_classifier(model, train_loader, valid_loader, exp_name='experiment', lr=0.01, epochs=50, momentum=0.99):
+def trainval_classifier(model, modelName, train_loader, valid_loader, exp_name='experiment', lr=0.01, epochs=50, momentum=0.99):
+    if (os.path.isfile('checkpoint\\' + modelName + '_checkpoint.pth')):
+        print('Uso il modello trainato precedentemente')
+        model.load_state_dict(torch.load('checkpoint\\' + modelName + '_checkpoint.pth')['state_dict'])   
     # Funzione di Loss
     criterion = nn.CrossEntropyLoss()
     # Stochastic gradient descent

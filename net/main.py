@@ -28,7 +28,7 @@ def training(modelName, pretrainedFlag, epochsNumber):
         model = vgg16(pretrained=pretrainedFlag)
         model.classifier[6] = nn.Linear(4096, num_class)
 
-    model = trainval_classifier(model, train_loader, valid_loader, lr=0.001, exp_name=modelName, momentum=0.99, epochs=epochsNumber)
+    model = trainval_classifier(model,modelName, train_loader, valid_loader, lr=0.001, exp_name=modelName, momentum=0.99, epochs=epochsNumber)
 
     # Fase di test
     predictions_test, labels_test = test_classifier(model, test_loader)
