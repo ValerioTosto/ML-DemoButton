@@ -40,7 +40,7 @@ def training(modelName, pretrainedFlag, epochsNumber):
     return accuracy, model
     
 def execute(modelName, fileName):
-    print(modelName)
+
     # Creo un modello per caricare il checkpoint
     if modelName == 'SqueezeNet':
         model = squeezenet1_0()
@@ -55,7 +55,7 @@ def execute(modelName, fileName):
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
-    im = Image.open(fileName)
+    im = imresize(Image.open(fileName))
     im = get_transform(im)
     batch_t = torch.unsqueeze(im, 0)
     model.eval()
@@ -72,6 +72,9 @@ def execute(modelName, fileName):
 
     return labels[index[0]]
 
+def imresize(img):
+    im_resized = img.resize((224,224), Image.ANTIALIAS)
+    return im_resized
 
 if __name__ == '__main__':
     training("VGG16", True, 1)
