@@ -13,6 +13,7 @@ import torch
 
 def training(modelName, pretrainedFlag, epochsNumber):
 
+    print("Modello: ", modelName)
     # Caricamento del dataset
     train_loader,valid_loader,test_loader = load_dataset()
 
@@ -20,7 +21,7 @@ def training(modelName, pretrainedFlag, epochsNumber):
     num_class = 4 
 
     if modelName == 'SqueezeNet':
-        model = squeezenet1_0(pretained=pretrainedFlag)
+        model = squeezenet1_0(pretrained=pretrainedFlag)
         model.classifier[1] = nn.Conv2d(512, num_class, kernel_size=(1, 1), stride=(1, 1))
         model.num_classes = num_class
     else:
@@ -39,6 +40,7 @@ def training(modelName, pretrainedFlag, epochsNumber):
     return accuracy, model
     
 def execute(modelName, fileName):
+    print(modelName)
     # Creo un modello per caricare il checkpoint
     if modelName == 'SqueezeNet':
         model = squeezenet1_0()
@@ -47,18 +49,29 @@ def execute(modelName, fileName):
     else:
         model = vgg16()
         model.classifier[6] = nn.Linear(4096, 4)
-    model.load_state_dict('checkpoint\\' + torch.load(modelName + 'checkpoint.pth')['state_dict'])
+    model.load_state_dict(torch.load('checkpoint\\' + modelName + '_checkpoint.pth')['state_dict'])
 
     # Predico la classe dell'input 
     device = "cuda" if torch.cuda.is_available() else "cpu"
+
+
     im = Image.open(fileName)
     im = get_transform(im)
-    pred = DataLoader([(im,0)], batch_size=1, num_workers=0)
-    for batch in pred:
-        x = batch[0].to(device)
-        out_predict = model(x)
+    batch_t = torch.unsqueeze(im, 0)
+    model.eval()
+    out_predict = model(batch_t)
+    _, index = torch.max(out_predict, 1)
 
-    print(out_predict)
+    percentage = torch.nn.functional.softmax(out_predict, dim=1)[0] * 100
+
+    labels = ['Non premuto', 'Bottone rosso', 'Bottone verde', 'Bottone blu']
+
+    # Debugging
+    #print("Prima di Softmax", out_predict)
+    #print(labels[index[0]], percentage[index[0]].item())
+
+    return labels[index[0]]
+
 
 if __name__ == '__main__':
-    training("VGG16", True, 2)
+    training("VGG16", True, 1)

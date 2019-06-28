@@ -81,7 +81,7 @@ class basicWindow(QtWidgets.QWidget):
     def trainModel(self):
         self.trainingButton.setText("Trained")
         self.trainingButton.setEnabled(False)
-        accuracy = training(self.modelCombo.currentText(), self.pretrainedCheckBox.isChecked(), int(self.epochsInput.text()))
+        accuracy,_ = training(self.modelCombo.currentText(), self.pretrainedCheckBox.isChecked(), int(self.epochsInput.text()))
         self.accuracyValue.setText(str(accuracy) + '%')
     
     def setImage(self):
@@ -96,7 +96,7 @@ class basicWindow(QtWidgets.QWidget):
             self.submitButton.setEnabled(True)
     
     def submitData(self):
-        predictedClass = execute("VGG16",self.fileName)
+        predictedClass = execute(self.modelCombo.currentText(),self.fileName)
         self.predictedValue.setText(str(predictedClass))
         
     def changeMode(self, state):

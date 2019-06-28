@@ -31,7 +31,7 @@ def trainval_classifier(model, train_loader, valid_loader, exp_name='experiment'
         torch.save({
             'state_dict' : model.state_dict(),
             'epoch' : epoch
-        }, "{}_{}.pth".format(exp_name, 'checkpoint'))
+        }, "{}{}_{}.pth".format('checkpoint\\',exp_name, 'checkpoint'))
 
     # Ciclo principale di training
     for e in range(epochs):
