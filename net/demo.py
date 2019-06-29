@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from main import execute, training
+from main import execute, training, loadModel
 
 class basicWindow(QtWidgets.QWidget):
     def __init__(self):
@@ -32,6 +32,9 @@ class basicWindow(QtWidgets.QWidget):
         self.accuracyValue = QtWidgets.QLabel()
 
         #Row 1 widgets
+        self.loadModelButton = QtWidgets.QPushButton('Load model', self)
+        self.loadModelButton.clicked.connect(self.loadModel)
+
         self.selectImageBtn = QtWidgets.QPushButton("Select Image")
         self.selectImageBtn.clicked.connect(self.setImage)
         
@@ -60,6 +63,7 @@ class basicWindow(QtWidgets.QWidget):
         grid_layout.addWidget(self.trainingButton, 0, 6)
         grid_layout.addWidget(self.accuracyLabel, 0, 7, QtCore.Qt.AlignRight)
         grid_layout.addWidget(self.accuracyValue, 0, 8)
+        grid_layout.addWidget(self.loadModelButton, 1, 0, 1, 3)
         grid_layout.addWidget(self.selectImageBtn, 1, 0, 2, 3)
         grid_layout.addWidget(self.imageLabel, 1, 3, 2, 6)
         grid_layout.addWidget(self.predictedLabel, 3, 0)
@@ -72,7 +76,7 @@ class basicWindow(QtWidgets.QWidget):
         #Set Window config
         self.setFixedSize(1300, 800)
         self.setWindowTitle('ML - Button Demo')
-        self.setWindowIcon(QtGui.QIcon('./img/logo.png'))
+        self.setWindowIcon(QtGui.QIcon('../img/logo.png'))
 
         #Uncheck developer mode
         self.changeMode(False)
@@ -82,6 +86,10 @@ class basicWindow(QtWidgets.QWidget):
         self.trainingButton.setText("Trained")
         self.trainingButton.setEnabled(False)
         accuracy,_ = training(self.modelCombo.currentText(), self.pretrainedCheckBox.isChecked(), int(self.epochsInput.text()))
+        self.accuracyValue.setText(str(accuracy) + '%')
+
+    def loadModel(self):
+        accuracy = loadModel(self.modelCombo.currentText())
         self.accuracyValue.setText(str(accuracy) + '%')
     
     def setImage(self):

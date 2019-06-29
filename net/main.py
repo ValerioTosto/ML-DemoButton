@@ -76,5 +76,10 @@ def imresize(img):
     im_resized = img.resize((224,224), Image.ANTIALIAS)
     return im_resized
 
+def loadModel(modelName):
+    accuracy = 100
+    return accuracy
+
+
 if __name__ == '__main__':
     training("VGG16", True, 1)
