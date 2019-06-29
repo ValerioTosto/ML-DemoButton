@@ -110,6 +110,9 @@ class basicWindow(QtWidgets.QWidget):
             self.fileName = self.fileName
             self.predictedValue.setText('')
             self.submitButton.setEnabled(True)
+        else:
+            self.imageLabel.setPixmap(QtGui.QPixmap())
+            self.submitButton.setEnabled(False)
     
     def submitData(self):
         predictedClass = execute(self.modelCombo.currentText(),self.fileName)
