@@ -14,6 +14,7 @@ class basicWindow(QtWidgets.QWidget):
 
         self.modelCombo = QtWidgets.QComboBox()
         self.modelCombo.addItems(["SqueezeNet", "VGG16"])
+        self.modelCombo.activated.connect(self.enableTraining)  
 
         self.pretrainedCheckBox = QtWidgets.QCheckBox("Pretrained")
 
@@ -23,6 +24,7 @@ class basicWindow(QtWidgets.QWidget):
         self.epochsInput.setFixedWidth(240)
         self.onlyInt = QtGui.QIntValidator()
         self.epochsInput.setValidator(self.onlyInt)
+        self.epochsInput.textChanged.connect(self.enableTraining)
 
         self.trainingButton = QtWidgets.QPushButton('Train', self)
         self.trainingButton.clicked.connect(self.trainModel)
@@ -82,6 +84,9 @@ class basicWindow(QtWidgets.QWidget):
         self.changeMode(False)
         
     
+    def enableTraining(self):
+        self.trainingButton.setEnabled(True)
+
     def trainModel(self):
         self.trainingButton.setText("Trained")
         self.trainingButton.setEnabled(False)
