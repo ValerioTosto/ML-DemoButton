@@ -30,6 +30,7 @@ class basicWindow(QtWidgets.QWidget):
 
         self.trainingButton = QtWidgets.QPushButton('Train', self)
         self.trainingButton.clicked.connect(self.trainModel)
+        self.trainingButton.setEnabled(False)
 
         self.accuracyLabel = QtWidgets.QLabel("Accuracy:")
 
@@ -113,6 +114,7 @@ class basicWindow(QtWidgets.QWidget):
     def submitData(self):
         predictedClass = execute(self.modelCombo.currentText(),self.fileName)
         self.predictedValue.setText(str(predictedClass))
+        self.submitButton.setEnabled(False)
         
     def changeMode(self, state):
         if (QtCore.Qt.Checked == state):
