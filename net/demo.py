@@ -22,8 +22,10 @@ class basicWindow(QtWidgets.QWidget):
 
         self.epochsInput = QtWidgets.QLineEdit(self)
         self.epochsInput.setFixedWidth(240)
-        self.onlyInt = QtGui.QIntValidator()
-        self.epochsInput.setValidator(self.onlyInt)
+        # Only allow 2 digits not starting with a zero
+        regex = QtCore.QRegExp('^[1-9]\d{1}$')
+        validator = QtGui.QRegExpValidator(regex)
+        self.epochsInput.setValidator(validator)
         self.epochsInput.textChanged.connect(self.enableTraining)
 
         self.trainingButton = QtWidgets.QPushButton('Train', self)
