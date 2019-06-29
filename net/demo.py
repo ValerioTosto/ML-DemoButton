@@ -52,7 +52,7 @@ class basicWindow(QtWidgets.QWidget):
         self.predictedValue = QtWidgets.QLabel()
 
         self.developerCheckBox = QtWidgets.QCheckBox("Developer Mode")
-        self.developerCheckBox.stateChanged.connect(self.changeMode)
+        self.developerCheckBox.stateChanged.connect(self.developerMode)
 
         #Row 4 widgets
         self.submitButton = QtWidgets.QPushButton('Submit', self)
@@ -84,11 +84,14 @@ class basicWindow(QtWidgets.QWidget):
         self.setWindowIcon(QtGui.QIcon('../img/logo.png'))
 
         #Uncheck developer mode
-        self.changeMode(False)
+        self.developerMode(False)
         
     
     def enableTraining(self):
-        self.trainingButton.setEnabled(True)
+        if self.epochsInput.text():
+            self.trainingButton.setEnabled(True)
+        else:
+            self.trainingButton.setEnabled(False)
 
     def trainModel(self):
         self.trainingButton.setText("Trained")
@@ -119,7 +122,7 @@ class basicWindow(QtWidgets.QWidget):
         self.predictedValue.setText(str(predictedClass))
         self.submitButton.setEnabled(False)
         
-    def changeMode(self, state):
+    def developerMode(self, state):
         if (QtCore.Qt.Checked == state):
             self.pretrainedCheckBox.show()
             self.epochsLabel.show()
