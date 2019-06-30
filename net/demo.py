@@ -1,3 +1,4 @@
+import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 from main import execute, training, loadModel
 
@@ -14,7 +15,7 @@ class basicWindow(QtWidgets.QWidget):
 
         self.modelCombo = QtWidgets.QComboBox()
         self.modelCombo.addItems(["SqueezeNet", "VGG16"])
-        self.modelCombo.activated.connect(self.enableTraining)  
+        self.modelCombo.activated.connect(self.changeModel)  
 
         self.pretrainedCheckBox = QtWidgets.QCheckBox("Pretrained")
 
@@ -72,8 +73,6 @@ class basicWindow(QtWidgets.QWidget):
         grid_layout.addWidget(self.developerCheckBox, 3, 8)
         grid_layout.addWidget(self.submitButton, 4, 0, 1, 9)
 
-        grid_layout.setRowStretch(1, 2)
-
         #Set Window config
         self.setFixedSize(1300, 800)
         self.setWindowTitle('ML - Button Demo')
@@ -83,6 +82,10 @@ class basicWindow(QtWidgets.QWidget):
         self.developerMode(False)
         
     
+    def changeModel(self):
+        self.enableTraining()
+        self.enableSubmit()
+
     def enableTraining(self):
         if self.epochsInput.text():
             self.trainingButton.setEnabled(True)
@@ -102,9 +105,8 @@ class basicWindow(QtWidgets.QWidget):
             pixmap = pixmap.scaled(self.imageLabel.width(), self.imageLabel.height(), QtCore.Qt.KeepAspectRatio) # Scale pixmap
             self.imageLabel.setPixmap(pixmap) # Set the pixmap onto the label
             self.imageLabel.setAlignment(QtCore.Qt.AlignCenter)
-            self.fileName = self.fileName
             self.predictedValue.setText('')
-            self.submitButton.setEnabled(True)
+            self.enableSubmit()
         else:
             self.imageLabel.setPixmap(QtGui.QPixmap())
             self.submitButton.setEnabled(False)
@@ -129,6 +131,15 @@ class basicWindow(QtWidgets.QWidget):
             self.trainingButton.hide()
             self.accuracyLabel.hide()
             self.accuracyValue.hide()
+    
+    def enableSubmit(self):
+        if (os.path.isfile('checkpoint\\' + self.modelCombo.currentText() + '_checkpoint.pth')):
+            self.submitButton.setText("Submit")
+            if self.imageLabel.pixmap():
+                self.submitButton.setEnabled(True)
+        else:
+            self.submitButton.setText("Train your model")
+            self.submitButton.setEnabled(False)
 
 
 if __name__ == '__main__':
