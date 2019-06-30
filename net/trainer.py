@@ -32,6 +32,8 @@ def trainval_classifier(model, modelName, train_loader, valid_loader, exp_name='
 
     # Funzione per salvare il checkpoint
     def save_checkpoint(model, epoch):
+        if not os.path.exists('checkpoint'):
+            os.makedirs('checkpoint')
         torch.save({
             'state_dict' : model.state_dict(),
             'epoch' : epoch
