@@ -88,6 +88,7 @@ class basicWindow(QtWidgets.QWidget):
 
     def enableTraining(self):
         if self.epochsInput.text():
+            self.trainingButton.setText("Train")
             self.trainingButton.setEnabled(True)
         else:
             self.trainingButton.setEnabled(False)
