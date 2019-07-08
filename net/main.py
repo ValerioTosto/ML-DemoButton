@@ -21,14 +21,14 @@ def training(modelName, pretrainedFlag, epochsNumber):
     num_class = 4 
 
     if modelName == 'SqueezeNet':
-        model = squeezenet1_0(pretrained=pretrainedFlag)
+        model = squeezenet1_0(pretrained=True)
         model.classifier[1] = nn.Conv2d(512, num_class, kernel_size=(1, 1), stride=(1, 1))
         model.num_classes = num_class
     else:
-        model = vgg16(pretrained=pretrainedFlag)
+        model = vgg16(pretrained=True)
         model.classifier[6] = nn.Linear(4096, num_class)
 
-    model = trainval_classifier(model,modelName, train_loader, valid_loader, lr=0.001, exp_name=modelName, momentum=0.99, epochs=epochsNumber)
+    model = trainval_classifier(model, pretrainedFlag, modelName, train_loader, valid_loader, lr=0.001, exp_name=modelName, momentum=0.99, epochs=epochsNumber)
 
     # Fase di test
     predictions_test, labels_test = test_classifier(model, test_loader)
@@ -62,13 +62,9 @@ def execute(modelName, fileName):
     out_predict = model(batch_t)
     _, index = torch.max(out_predict, 1)
 
-    percentage = torch.nn.functional.softmax(out_predict, dim=1)[0] * 100
+    #♦ percentage = torch.nn.functional.softmax(out_predict, dim=1)[0] * 100
 
-    labels = ['Non premuto', 'Bottone rosso', 'Bottone verde', 'Bottone blu']
-
-    # Debugging
-    #print("Prima di Softmax", out_predict)
-    #print(labels[index[0]], percentage[index[0]].item())
+    labels = ['Non premuto', 'Bottone A', 'Bottone B', 'Bottone C']
 
     return labels[index[0]]
 

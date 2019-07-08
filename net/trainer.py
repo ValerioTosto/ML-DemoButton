@@ -6,10 +6,11 @@ from torchnet.meter import AverageValueMeter
 from torchnet.logger import VisdomPlotLogger, VisdomSaver
 from sklearn.metrics import accuracy_score
 
-def trainval_classifier(model, modelName, train_loader, valid_loader, exp_name='experiment', lr=0.01, epochs=50, momentum=0.99):
-    if (os.path.isfile('checkpoint\\' + modelName + '_checkpoint.pth')):
-        print('Uso il modello trainato precedentemente')
-        model.load_state_dict(torch.load('checkpoint\\' + modelName + '_checkpoint.pth')['state_dict'])   
+def trainval_classifier(model, pretrained, modelName, train_loader, valid_loader, exp_name='experiment', lr=0.001, epochs=50, momentum=0.99):
+    if pretrained:
+        if (os.path.isfile('checkpoint\\' + modelName + '_checkpoint.pth')):
+            print('Uso il modello trainato precedentemente')
+            model.load_state_dict(torch.load('checkpoint\\' + modelName + '_checkpoint.pth')['state_dict'])   
     # Funzione di Loss
     criterion = nn.CrossEntropyLoss()
     # Stochastic gradient descent
@@ -76,7 +77,7 @@ def trainval_classifier(model, modelName, train_loader, valid_loader, exp_name='
             loss_logger.log(e+1, loss_meter.value()[0], name=mode)
             acc_logger.log(e+1, acc_meter.value()[0], name=mode)
             #salviamo solo il corrente, sovrascrivendo il passato
-        print(e)
+        print('Epoca no.', e)
         save_checkpoint(model, e )
 
     return model
