@@ -18,11 +18,12 @@ class basicWindow(QtWidgets.QWidget):
         self.modelCombo.activated.connect(self.changeModel)  
 
         self.pretrainedCheckBox = QtWidgets.QCheckBox("Pretrained")
+        self.dataAugmentationCheckBox = QtWidgets.QCheckBox("Data Augmentation")
 
         self.epochsLabel = QtWidgets.QLabel("Epochs:")
 
         self.epochsInput = QtWidgets.QLineEdit(self)
-        self.epochsInput.setFixedWidth(240)
+        self.epochsInput.setFixedWidth(120)
         # Only allow 2 digits not starting with a zero
         regex = QtCore.QRegExp('^[1-9]\d{1}$')
         validator = QtGui.QRegExpValidator(regex)
@@ -61,16 +62,17 @@ class basicWindow(QtWidgets.QWidget):
         grid_layout.addWidget(self.modelLabel, 0, 0)
         grid_layout.addWidget(self.modelCombo, 0, 1)
         grid_layout.addWidget(self.pretrainedCheckBox, 0, 2)
-        grid_layout.addWidget(self.epochsLabel, 0, 3)
-        grid_layout.addWidget(self.epochsInput, 0, 4)
-        grid_layout.addWidget(self.trainingButton, 0, 6)
+        grid_layout.addWidget(self.dataAugmentationCheckBox, 0, 3)
+        grid_layout.addWidget(self.epochsLabel, 0, 4, QtCore.Qt.AlignRight)
+        grid_layout.addWidget(self.epochsInput, 0, 5)
+        grid_layout.addWidget(self.trainingButton, 0, 6, QtCore.Qt.AlignRight)
         grid_layout.addWidget(self.accuracyLabel, 0, 7, QtCore.Qt.AlignRight)
         grid_layout.addWidget(self.accuracyValue, 0, 8)
         grid_layout.addWidget(self.selectImageButton, 1, 0, 2, 3)
         grid_layout.addWidget(self.imageLabel, 1, 3, 2, 6)
         grid_layout.addWidget(self.predictedLabel, 3, 0)
         grid_layout.addWidget(self.predictedValue, 3, 3)
-        grid_layout.addWidget(self.developerCheckBox, 3, 8)
+        grid_layout.addWidget(self.developerCheckBox, 3, 8, QtCore.Qt.AlignRight)
         grid_layout.addWidget(self.submitButton, 4, 0, 1, 9)
 
         #Set Window config
@@ -120,6 +122,7 @@ class basicWindow(QtWidgets.QWidget):
     def developerMode(self, state):
         if (QtCore.Qt.Checked == state):
             self.pretrainedCheckBox.show()
+            self.dataAugmentationCheckBox.show()
             self.epochsLabel.show()
             self.epochsInput.show()
             self.trainingButton.show()
@@ -127,6 +130,7 @@ class basicWindow(QtWidgets.QWidget):
             self.accuracyValue.show()
         else:
             self.pretrainedCheckBox.hide()
+            self.dataAugmentationCheckBox.hide()
             self.epochsLabel.hide()
             self.epochsInput.hide()
             self.trainingButton.hide()
