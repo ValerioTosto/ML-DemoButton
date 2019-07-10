@@ -11,11 +11,11 @@ from torch import nn
 from PIL import Image
 import torch
 
-def training(modelName, pretrainedFlag, epochsNumber):
+def training(modelName, dataAugmentationFlag, pretrainedFlag, epochsNumber):
 
     print("Modello: ", modelName)
     # Caricamento del dataset
-    train_loader,valid_loader,test_loader = load_dataset()
+    train_loader,valid_loader,test_loader = load_dataset(dataAugmentationFlag)
 
     # Definizione del modello
     num_class = 4 
@@ -50,19 +50,14 @@ def execute(modelName, fileName):
         model = vgg16()
         model.classifier[6] = nn.Linear(4096, 4)
     model.load_state_dict(torch.load('checkpoint\\' + modelName + '_checkpoint.pth')['state_dict'])
-
-    # Predico la classe dell'input 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-
-
+    
+    # Preprocessing dell'immagine di input
     im = imresize(Image.open(fileName))
     im = get_transform(im)
     batch_t = torch.unsqueeze(im, 0)
     model.eval()
     out_predict = model(batch_t)
     _, index = torch.max(out_predict, 1)
-
-    #♦ percentage = torch.nn.functional.softmax(out_predict, dim=1)[0] * 100
 
     labels = ['Non premuto', 'Bottone A', 'Bottone B', 'Bottone C']
 

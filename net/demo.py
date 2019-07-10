@@ -98,7 +98,7 @@ class basicWindow(QtWidgets.QWidget):
     def trainModel(self):
         self.trainingButton.setText("Trained")
         self.trainingButton.setEnabled(False)
-        accuracy,_ = training(self.modelCombo.currentText(), self.pretrainedCheckBox.isChecked(), int(self.epochsInput.text()))
+        accuracy,_ = training(self.modelCombo.currentText(), self.dataAugmentationCheckBox.isChecked(), self.pretrainedCheckBox.isChecked(), int(self.epochsInput.text()))
         self.accuracyValue.setText(str(accuracy) + '%')
     
     def setImage(self):
