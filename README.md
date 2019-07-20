@@ -165,14 +165,24 @@ Sia la Squeezenet che la VGG raggiungono un&#39;accuracy del 100% su questo insi
 | Foto 4 | Foto 5 | Foto 6 |
 | ![img](doc/WearableImageTest/7.jpg?raw=true) | ![img](doc/WearableImageTest/8.jpg?raw=true) | ![img](doc/WearableImageTest/9.jpg?raw=true) |
 | Foto 7 | Foto 8 | Foto 9 |
+
 **Tabella 2**
 
-|   | Foto 1 S | Foto 1 V | Foto 2 S | Foto 2 V | Foto 3 S | Foto 3 V | Foto 4 S | Foto 4 V | Foto 5 S | Foto 5 V | Foto 6 S | Foto 6 V | Foto 7 S | Foto 7 V | Foto 8 S | Foto 8 V | Foto 9 S | Foto 9 V |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Dataset 3K| ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
-| Dataset 2K| ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
-| Dataset 1K|   | ✔ | ✔ | ✔ |   | ✔ | ✔ |   | ✔ | ✔ |   | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
-**Tabella 3** - Risultati su Wearable set, per ogni foto il risultato di Squeezenet (S) e VGG16 (V)
+|   | Foto 1 | Foto 2 | Foto 3 | Foto 4 | Foto 5 | Foto 6 | Foto 7 | Foto 8 | Foto 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dataset 3K| ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+| Dataset 2K| ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+| Dataset 1K|   | ✔ |   | ✔ | ✔ |   | ✔ | ✔ | ✔ |
+
+**Tabella 3a** - Risultati su Wearable set con Squeezenet
+
+|   | Foto 1 | Foto 2 | Foto 3 | Foto 4 | Foto 5 | Foto 6 | Foto 7 | Foto 8 | Foto 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dataset 3K| ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+| Dataset 2K| ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+| Dataset 1K| ✔ | ✔ | ✔ |   | ✔ | ✔ | ✔ | ✔ | ✔ |
+
+**Tabella 3b** - Risultati su Wearable set con VGG16
 
 È stato condotto un esperimento per verificare dove i modelli falliscono, creando delle immagini ad hoc contenute nella cartella &quot;WeirdImageSet&quot; e mostrate in **Tabella 2​**. Alcune di queste immagini sono state create usando tipi di inquadrature molto differenti rispetto a quelle usate per creare il dataset (inquadrature molto rare in un&#39;acquisizione da un wearable) o situazioni particolari e altre immagini sono state create usando un altro tipo di pulsantiera. La Squeezenet sbaglia a predire la classe per le foto 1, 2, 5, 7, 8, 9. Da questi risultati si nota che essa soffre di più il cambio di pulsantiera e ha qualche problema nel riconoscere spazialmente la posizione del dito. La VGG16, invece, non riesce a classificare in maniera corretta le foto 2, 3, 4, 5, 6, 7. Nonostante la maggior complessità della VGG16, l&#39;accuracy in entrambi i modelli è del 33% ma alcune foto, come quelle della pulsantiera diversa, le ha classificate correttamente. Per cercare di risolvere questi problemi, sono stati condotti alcuni esperimenti variando la grandezza del dataset e provando ad utilizzare data augmentation, ma quest&#39;ultimo ha portato solo a peggiorare i risultati.
 
@@ -190,14 +200,25 @@ Con la VGG16, l&#39;accuracy sul &quot;WeirdImageSet&quot; viene ancora aumentat
 | Foto 4 | Foto 5 | Foto 6 |
 | ![img](doc/WeirdImageTest/7.jpg?raw=true) | ![img](doc/WeirdImageTest/8.jpg?raw=true) | ![img](doc/WeirdImageTest/9.jpg?raw=true) |
 | Foto 7 | Foto 8 | Foto 9 |
+
 **Tabella 5**
 
-|   | Foto 1 S | Foto 1 V | Foto 2 S | Foto 2 V | Foto 3 S | Foto 3 V | Foto 4 S | Foto 4 V | Foto 5 S | Foto 5 V | Foto 6 S | Foto 6 V | Foto 7 S | Foto 7 V | Foto 8 S | Foto 8 V | Foto 9 S | Foto 9 V |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Dataset 3K|   | ✔ |   |   | ✔ |   | ✔ |   |   |   | ✔ |   |   |   |   | ✔ |   | ✔ |
-| Dataset 2K|   |   | ✔ | ✔  | ✔ | ✔ |   | ✔ |   | ✔ | ✔ | ✔ | ✔ |   |   |   | ✔ | ✔ |
-| Dataset 1K|   |   |   | ✔  | ✔ |   | ✔ |   |   |   | ✔ |   |   |   |   | ✔ |   | ✔ |
-**Tabella 6​** - Risultati su Weird set, per ogni foto il risultato di Squeezenet (S) e VGG16 (V)
+
+|   | Foto 1 | Foto 2 | Foto 3 | Foto 4 | Foto 5 | Foto 6 | Foto 7 | Foto 8 | Foto 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dataset 3K|   |   | ✔ | ✔ |   | ✔ |   |   |   |
+| Dataset 2K|   | ✔ | ✔ |   |   | ✔ | ✔ |   | ✔ |
+| Dataset 1K|   |   | ✔ | ✔ |   | ✔ |   |   |   |
+
+**Tabella 6a** - Risultati su Weird set con Squeezenet
+
+|   | Foto 1 | Foto 2 | Foto 3 | Foto 4 | Foto 5 | Foto 6 | Foto 7 | Foto 8 | Foto 9 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dataset 3K| ✔ |   |   |   |   |   |   | ✔ | ✔ |
+| Dataset 2K|   | ✔ | ✔ | ✔ | ✔ | ✔ |   |   | ✔ |
+| Dataset 1K|   | ✔ |   |   |   |   |   | ✔ | ✔ |
+
+**Tabella 6b** - Risultati su Weird set con VGG16
 
 ----
 ## 5. Conclusioni
