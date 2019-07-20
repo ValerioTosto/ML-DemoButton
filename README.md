@@ -184,9 +184,9 @@ Con la VGG16, l&#39;accuracy sul &quot;WeirdImageSet&quot; viene ancora aumentat
 
 |   |   |   |
 | --- | --- | --- |
-| ![img](doc/WeirdImageTest/1.jpg?raw=true) | ![img](doc/WeirdImageTest/2.jpg?raw=true) | ![img](doc/WeirdImageTest/3.jpg?raw=true) |
+| ![img](doc/WeirdImageTest/1.JPG?raw=true) | ![img](doc/WeirdImageTest/2.jpg?raw=true) | ![img](doc/WeirdImageTest/3.jpg?raw=true) |
 | Foto 1 | Foto 2 | Foto 3 |
-| ![img](doc/WeirdImageTest/4.jpg?raw=true) | ![img](doc/WeirdImageTest/5.jpg?raw=true) | ![img](doc/WeirdImageTest/6.jpg?raw=true) |
+| ![img](doc/WeirdImageTest/4.JPG?raw=true) | ![img](doc/WeirdImageTest/5.jpg?raw=true) | ![img](doc/WeirdImageTest/6.jpg?raw=true) |
 | Foto 4 | Foto 5 | Foto 6 |
 | ![img](doc/WeirdImageTest/7.jpg?raw=true) | ![img](doc/WeirdImageTest/8.jpg?raw=true) | ![img](doc/WeirdImageTest/9.jpg?raw=true) |
 | Foto 7 | Foto 8 | Foto 9 |
